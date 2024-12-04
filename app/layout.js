@@ -1,6 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import {AuthContextProvider} from "@/app/_utils/auth-context";
+import Sky from "@/app/res/Sky.jpg";
+import Image from "next/image";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,6 +26,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <AuthContextProvider>
+              <Image className='object-cover -z-10' src={Sky} alt="" fill={true}/>
               {children}
           </AuthContextProvider>
       </body>
