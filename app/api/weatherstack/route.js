@@ -8,21 +8,21 @@ export async function GET() {
     try {
         const headerList = await headers()
         const ip = headerList.get('x-forwarded-for')
-        const ipRes = await fetch('https://ipinfo.io/json?token=' + process.env.IPINFO_TOKEN);
-        const data = await ipRes.text();
+        const ipRes = await fetch('https://ipinfo.io/' + ip + '?token=' + process.env.IPINFO_TOKEN);
+        const data = await ipRes.json();
 
-        console.log(ip);
+        console.log(data)
 
-        const url = 'http://api.weatherstack.com/current?access_key=' + process.env.WEATHER_STACK_API_KEY + '&query=Montes Claros';
+        const url = 'http://api.weatherstack.com/current?access_key=' + process.env.WEATHER_STACK_API_KEY + '&query=' + data.city;
         const options = {
             method: 'GET'
         };
 
-        //let response = await fetch(url, options);
-        //let result = await response.text();
-        //if(response.status === 200) {
-            return ip;
-        //}
+        let response = await fetch(url, options);
+        let result = await response.json();
+        if(response.status === 200) {
+            return result;
+        }
     }
     catch (error) {
         console.error(error);
