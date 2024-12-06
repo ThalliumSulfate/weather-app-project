@@ -4,7 +4,6 @@ import GitLogo from '../res/GitLogo.png'
 import Image from 'next/image'
 import {useUserAuth} from '../_utils/auth-context'
 import {useRouter } from 'next/navigation'
-import {Get} from "@/app/api/ip-api/route";
 
 export default function LoginCard(props) {
     const router = useRouter();

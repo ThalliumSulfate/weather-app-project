@@ -1,13 +1,17 @@
 import WeatherCard from "@/app/components/weatherCard";
-import {Get} from "@/app/api/ip-api/route";
+import {GET} from "@/app/api/weatherstack/route";
 
-export default function Page() {
-    Get().then(r => console.log(r.toString()));
+export default async function Page() {
+    let weather;
+
+    weather = await GET()
+
     return (
         <main className="flex grow w-dvw h-dvh gap-4">
-            <div className='m-4 h-auto w-full'>
-                <WeatherCard />
+            <div className='m-8 h-auto w-full'>
+                <WeatherCard text={weather}/>
             </div>
         </main>
     );
 }
+
