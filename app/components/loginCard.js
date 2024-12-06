@@ -5,7 +5,7 @@ import Image from 'next/image'
 import {useUserAuth} from '../_utils/auth-context'
 import {useRouter } from 'next/navigation'
 
-export default function LoginCard(props) {
+export default function LoginCard() {
     const router = useRouter();
     const {user, gitHubSignIn} = useUserAuth();
 
@@ -13,7 +13,7 @@ export default function LoginCard(props) {
         e.preventDefault();
         await gitHubSignIn();
         if(user) {
-            router.push('/weather');
+            router.push('/weather?user=True');
         }
     }
 

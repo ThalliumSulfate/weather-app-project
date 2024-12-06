@@ -96,9 +96,7 @@ export default function WeatherCard(props) {
 
     const flavour = weatherSuggestion();
 
-    const { user } = useUserAuth();
-
-    if(user) {
+    if(props.user) {
         return (
             <div className="flex flex-col rounded-lg border-2 border-blue-200 bg-blue-300">
                 <div className='flex flex-row'>
@@ -146,7 +144,7 @@ export default function WeatherCard(props) {
                 <div className="flex flex-row items-center justify-center gap-2 rounded-l-xl bg-blue-400 p-4">
                     <h1 className='font-extrabold text-5xl bg-blue-200 rounded-3xl p-3 mt-4'>WeatherStorm</h1>
                 </div>
-                    <p>Not Logged In</p>
+                    <p className='m-4'>Not Logged In</p>
                 </div>
             </div>
         );
