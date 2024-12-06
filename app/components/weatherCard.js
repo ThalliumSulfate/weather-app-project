@@ -7,12 +7,13 @@ export default function WeatherCard(props) {
     if(props.info === undefined) {
         info = buildFormat;
     }
-
-    if(props.info.success === false) {
-        info = buildFormat;
-    }
     else {
-        info = props.info;
+        if(props.info.success === false) {
+            info = buildFormat;
+        }
+        else {
+            info = props.info;
+        }
     }
 
     let location = info.location;
