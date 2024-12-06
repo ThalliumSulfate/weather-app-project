@@ -3,7 +3,6 @@ import {GET} from "@/app/api/weatherstack/route";
 
 export default async function Page() {
     let weather = await GET();
-    console.log(weather);
 
     return (
         <main className="flex grow w-dvw h-dvh gap-4">
