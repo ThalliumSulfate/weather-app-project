@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import {useUserAuth} from "@/app/_utils/auth-context";
 
 export default function WeatherCard(props) {
     const buildFormat = JSON.parse('{"request":{"type":"City","query":"Calgary, Canada","language":"en","unit":"m"},"location":{"name":"Calgary","country":"Canada","region":"Alberta","lat":"51.083","lon":"-114.083","timezone_id":"America\/Edmonton","localtime":"2024-12-04 09:03","localtime_epoch":1733302980,"utc_offset":"-7.0"},"current":{"observation_time":"04:03 PM","temperature":-5,"weather_code":260,"weather_icons":["https:\/\/cdn.worldweatheronline.com\/images\/wsymbols01_png_64\/wsymbol_0007_fog.png"],"weather_descriptions":["Freezing Fog"],"wind_speed":10,"wind_degree":151,"wind_dir":"SSE","pressure":1024,"precip":0,"humidity":93,"cloudcover":60,"feelslike":-9,"uv_index":0,"visibility":0,"is_day":"yes"}}');
@@ -95,43 +96,60 @@ export default function WeatherCard(props) {
 
     const flavour = weatherSuggestion();
 
-    return (
-        <div className="flex flex-col rounded-lg border-2 border-blue-200 bg-blue-300">
-            <div className='flex flex-row'>
+    const { user } = useUserAuth();
+
+    if(user) {
+        return (
+            <div className="flex flex-col rounded-lg border-2 border-blue-200 bg-blue-300">
+                <div className='flex flex-row'>
+                    <div className="flex flex-row items-center justify-center gap-2 rounded-l-xl bg-blue-400 p-4">
+                        <h1 className='font-extrabold text-5xl bg-blue-200 rounded-3xl p-3 mt-4'>WeatherStorm</h1>
+                    </div>
+                    <div className='flex flex-col'>
+                        <div className='flex flex-row'>
+                            <div className='m-4 font-bold text-xl'>
+                                <p>City: {location.name}, {location.region} </p>
+                                <p>Country: {location.country}</p>
+                                <p>Time of Observation: {timeValue}</p>
+                            </div>
+                            <div className='flex flex-row gap-2'>
+                                <div className='m-4 font-bold text-xl'>
+                                    <p>Temperature: {temp} C</p>
+                                    <p>Feels Like: {current.feelslike} C</p>
+                                    <p>Wind Speed: {current.wind_speed} KM/H</p>
+                                    <p>Wind Direction: {current.wind_dir} {current.wind_degree}°</p>
+                                    <p>Humidity: {current.humidity}%</p>
+                                    <p>Cloud Cover: {current.cloudcover}%</p>
+                                    <p>UV Index: {current.uv_index}</p>
+                                </div>
+                                <div className='flex flex-col items-center m-4 font-bold'>
+                                    <Image className='w-20 h-20' width={80} height={80} src={weatherIcon} alt=''/>
+                                    <p>{description}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p className='p-4'>{flavour}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        );
+    }
+    else {
+        return (
+            <div className="flex flex-col rounded-lg border-2 border-blue-200 bg-blue-300">
+                <div className='flex flex-row'>
                 <div className="flex flex-row items-center justify-center gap-2 rounded-l-xl bg-blue-400 p-4">
                     <h1 className='font-extrabold text-5xl bg-blue-200 rounded-3xl p-3 mt-4'>WeatherStorm</h1>
                 </div>
-                <div className='flex flex-col'>
-                    <div className='flex flex-row'>
-                        <div className='m-4 font-bold text-xl'>
-                            <p>City: {location.name}, {location.region} </p>
-                            <p>Country: {location.country}</p>
-                            <p>Time of Observation: {timeValue}</p>
-                        </div>
-                        <div className='flex flex-row gap-2'>
-                            <div className='m-4 font-bold text-xl'>
-                                <p>Temperature: {temp} C</p>
-                                <p>Feels Like: {current.feelslike} C</p>
-                                <p>Wind Speed: {current.wind_speed} KM/H</p>
-                                <p>Wind Direction: {current.wind_dir} {current.wind_degree}°</p>
-                                <p>Humidity: {current.humidity}%</p>
-                                <p>Cloud Cover: {current.cloudcover}%</p>
-                                <p>UV Index: {current.uv_index}</p>
-                            </div>
-                            <div className='flex flex-col items-center m-4 font-bold'>
-                                <Image className='w-20 h-20' width={80} height={80} src={weatherIcon} alt=''/>
-                                <p>{description}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <p className='p-4'>{flavour}</p>
-                    </div>
+                    <p>Not Logged In</p>
                 </div>
-
             </div>
+        );
+    }
 
-
-        </div>
-    )
 }
