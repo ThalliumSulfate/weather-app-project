@@ -6,7 +6,7 @@ export default function WeatherCard(props) {
     if(props.info.success === false) {
         info = buildFormat;
     }
-    else if(props.info.success === undefined) {
+    else if(props.info === undefined) {
         info = buildFormat;
     }
     else {
