@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function WeatherCard(props) {
     let text = JSON.parse(props.text);
-    let IP = JSON.parse(props.ip);
+    let IP = props.ip;
 
     let location = text.location;
     let current = text.current;
@@ -68,7 +68,7 @@ export default function WeatherCard(props) {
                     <p>Humidity: {current.humidity}%</p>
                     <p>Cloud Cover: {current.cloudcover}%</p>
                     <p>UV Index: {current.uv_index}</p>
-                    <p>IP: {IP.ip}</p>
+                    <p>IP: {IP}</p>
                 </div>
                 <div className='flex flex-col items-center m-4 font-bold'>
                     <Image className='w-20 h-20' width={80} height={80} src={weatherIcon} alt='' />
